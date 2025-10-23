@@ -17,27 +17,15 @@ export function SignUpPage() {
     setLoading(true);
 
     try {
-      const result = await signUp.email({
+      await signUp.email({
         email,
         password,
         name,
+        callbackURL: '/home',
       });
-
-      // Check if there was an error in the response
-      if (result?.error) {
-        setError(result.error.message || 'Failed to create account');
-        setLoading(false);
-        return;
-      }
-
-      navigate('/home');
-    } catch (err: any) {
-      // Handle different error formats
-      const errorMessage =
-        err?.message ||
-        err?.error?.message ||
-        (typeof err === 'string' ? err : 'Failed to create account');
-      setError(errorMessage);
+      navigate('/');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to create account');
     } finally {
       setLoading(false);
     }

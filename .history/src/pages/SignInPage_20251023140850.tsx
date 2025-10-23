@@ -16,77 +16,41 @@ export function SignInPage() {
     setLoading(true);
 
     try {
-      const result = await signIn.email({
+      await signIn.email({
         email,
         password,
+        callbackURL: '/home',
       });
-
-      // Check if there was an error in the response
-      if (result?.error) {
-        setError(result.error.message || 'Failed to sign in');
-        setLoading(false);
-        return;
-      }
-
       navigate('/home');
-    } catch (err: any) {
-      // Handle different error formats
-      const errorMessage =
-        err?.message ||
-        err?.error?.message ||
-        (typeof err === 'string' ? err : 'Failed to sign in');
-      setError(errorMessage);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to sign in');
     } finally {
       setLoading(false);
     }
   };
 
   const handleGoogleSignIn = async () => {
-    setError('');
     setLoading(true);
     try {
-      const result = await signIn.social({
+      await signIn.social({
         provider: 'google',
+        callbackURL: '/home',
       });
-
-      if (result?.error) {
-        setError(result.error.message || 'Failed to sign in with Google');
-        setLoading(false);
-        return;
-      }
-
-      navigate('/home');
-    } catch (err: any) {
-      const errorMessage =
-        err?.message ||
-        err?.error?.message ||
-        (typeof err === 'string' ? err : 'Failed to sign in with Google');
-      setError(errorMessage);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to sign in with Google');
       setLoading(false);
     }
   };
 
   const handleGithubSignIn = async () => {
-    setError('');
     setLoading(true);
     try {
-      const result = await signIn.social({
+      await signIn.social({
         provider: 'github',
+        callbackURL: '/home',
       });
-
-      if (result?.error) {
-        setError(result.error.message || 'Failed to sign in with GitHub');
-        setLoading(false);
-        return;
-      }
-
-      navigate('/home');
-    } catch (err: any) {
-      const errorMessage =
-        err?.message ||
-        err?.error?.message ||
-        (typeof err === 'string' ? err : 'Failed to sign in with GitHub');
-      setError(errorMessage);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to sign in with GitHub');
       setLoading(false);
     }
   };
