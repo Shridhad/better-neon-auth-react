@@ -32,7 +32,7 @@ A productivity tool built with React, TypeScript, Vite, and Tailwind CSS that he
 ### Setup & Configuration
 - [x] Initialize git repository
 - [x] Create requirements.md file
-- [ ] Initialize Vite + React + TypeScript project
+- [x] Initialize Vite + React + TypeScript project
 - [ ] Set up Tailwind CSS
 - [ ] Install and configure better-auth client
 - [ ] Set up React Router
