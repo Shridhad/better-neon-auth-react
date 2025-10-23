@@ -38,10 +38,10 @@ A productivity tool built with React, TypeScript, Vite, and Tailwind CSS that he
 - [ ] Set up React Router
 
 ### Design System
-- [ ] Create Linear-inspired color palette
-- [ ] Create base components (Button, Input, Card, etc.)
-- [ ] Set up typography system
-- [ ] Create layout components
+- [x] Create Linear-inspired color palette
+- [x] Create base components (Button, Input, Card, etc.)
+- [x] Set up typography system
+- [x] Create layout components
 
 ### Authentication
 - [ ] Create sign-in page with email/password form
