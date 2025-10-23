@@ -34,7 +34,7 @@ A productivity tool built with React, TypeScript, Vite, and Tailwind CSS that he
 - [x] Create requirements.md file
 - [x] Initialize Vite + React + TypeScript project
 - [x] Set up Tailwind CSS
-- [ ] Install and configure better-auth client
+- [x] Install and configure better-auth client
 - [ ] Set up React Router
 
 ### Design System
