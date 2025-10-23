@@ -45,17 +45,12 @@ export function SignInPage() {
     setError('');
     setLoading(true);
     try {
-      const result = await signIn.social({
+      await signIn.social({
         provider: 'google',
       });
-
-      if (result?.error) {
-        setError(result.error.message || 'Failed to sign in with Google');
-        setLoading(false);
-        return;
-      }
-
-      navigate('/home');
+      // Note: Browser will redirect to Google OAuth page, so code after this won't execute.
+      // After OAuth completes, better-auth will handle the callback and App.tsx routing
+      // will automatically redirect authenticated users to /home.
     } catch (err: any) {
       const errorMessage =
         err?.message ||
@@ -70,17 +65,12 @@ export function SignInPage() {
     setError('');
     setLoading(true);
     try {
-      const result = await signIn.social({
+      await signIn.social({
         provider: 'github',
       });
-
-      if (result?.error) {
-        setError(result.error.message || 'Failed to sign in with GitHub');
-        setLoading(false);
-        return;
-      }
-
-      navigate('/home');
+      // Note: Browser will redirect to GitHub OAuth page, so code after this won't execute.
+      // After OAuth completes, better-auth will handle the callback and App.tsx routing
+      // will automatically redirect authenticated users to /home.
     } catch (err: any) {
       const errorMessage =
         err?.message ||
