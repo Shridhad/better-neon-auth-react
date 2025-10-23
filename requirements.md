@@ -69,12 +69,12 @@ A productivity tool built with React, TypeScript, Vite, and Tailwind CSS that he
 - [x] Implement redirect logic for unauthenticated users
 
 ### Polish & Testing
-- [ ] Test authentication flow
-- [ ] Test all sign-in methods
-- [ ] Test sign-out functionality
-- [ ] Test responsive design
-- [ ] Test animations
-- [ ] Final polish and bug fixes
+- [x] Test authentication flow
+- [x] Test all sign-in methods
+- [x] Test sign-out functionality
+- [x] Test responsive design
+- [x] Test animations
+- [x] Final polish and bug fixes
 
 ## Design Principles (Linear-inspired)
 1. **Minimal and Clean**: Reduce visual noise, focus on content
