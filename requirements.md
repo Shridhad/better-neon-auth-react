@@ -35,7 +35,7 @@ A productivity tool built with React, TypeScript, Vite, and Tailwind CSS that he
 - [x] Initialize Vite + React + TypeScript project
 - [x] Set up Tailwind CSS
 - [x] Install and configure better-auth client
-- [ ] Set up React Router
+- [x] Set up React Router
 
 ### Design System
 - [x] Create Linear-inspired color palette
@@ -44,29 +44,29 @@ A productivity tool built with React, TypeScript, Vite, and Tailwind CSS that he
 - [x] Create layout components
 
 ### Authentication
-- [ ] Create sign-in page with email/password form
-- [ ] Add Google OAuth button
-- [ ] Add GitHub OAuth button
-- [ ] Implement authentication logic with better-auth
-- [ ] Create sign-up page
-- [ ] Implement user session management
-- [ ] Implement sign-out functionality
+- [x] Create sign-in page with email/password form
+- [x] Add Google OAuth button
+- [x] Add GitHub OAuth button
+- [x] Implement authentication logic with better-auth
+- [x] Create sign-up page
+- [x] Implement user session management
+- [x] Implement sign-out functionality
 
 ### UI Components
-- [ ] Create header component with:
+- [x] Create header component with:
   - User name display
   - User profile picture
   - Sign-out button
-- [ ] Create landing page with:
+- [x] Create landing page with:
   - Marketing headline
   - Feature descriptions
   - Call-to-action
   - Animations for signed-in users
 
 ### Routing & Navigation
-- [ ] Set up routing structure
-- [ ] Create protected routes for authenticated users
-- [ ] Implement redirect logic for unauthenticated users
+- [x] Set up routing structure
+- [x] Create protected routes for authenticated users
+- [x] Implement redirect logic for unauthenticated users
 
 ### Polish & Testing
 - [ ] Test authentication flow

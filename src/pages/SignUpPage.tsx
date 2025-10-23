@@ -1,6 +1,6 @@
 import { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Input, Card, Divider } from '../components/ui';
+import { Button, Input, Card } from '../components/ui';
 import { signUp } from '../lib/auth-client';
 
 export function SignUpPage() {
