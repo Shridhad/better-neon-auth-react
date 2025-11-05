@@ -52,6 +52,7 @@ A productivity tool built with React, TypeScript, Vite, and Tailwind CSS that he
 - [x] Implement user session management
 - [x] Implement sign-out functionality
 - [x] Add email verification message on signup
+- [x] Handle email verification error on sign-in
 
 ### UI Components
 - [x] Create header component with:
