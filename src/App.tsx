@@ -4,6 +4,7 @@ import { LandingPage } from './pages/LandingPage';
 import { SignInPage } from './pages/SignInPage';
 import { SignUpPage } from './pages/SignUpPage';
 import { HomePage } from './pages/HomePage';
+import { EmailVerificationPage } from './pages/EmailVerificationPage';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
 function App() {
@@ -17,20 +18,28 @@ function App() {
     );
   }
 
+  // Check if user has a valid session with verified email
+  // If email is not verified, treat as not authenticated for redirect purposes
+  const isAuthenticated = session?.user?.emailVerified;
+
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path="/"
-          element={session ? <Navigate to="/home" replace /> : <LandingPage />}
+          element={isAuthenticated ? <Navigate to="/home" replace /> : <LandingPage />}
         />
         <Route
           path="/signin"
-          element={session ? <Navigate to="/home" replace /> : <SignInPage />}
+          element={isAuthenticated ? <Navigate to="/home" replace /> : <SignInPage />}
         />
         <Route
           path="/signup"
-          element={session ? <Navigate to="/home" replace /> : <SignUpPage />}
+          element={isAuthenticated ? <Navigate to="/home" replace /> : <SignUpPage />}
+        />
+        <Route
+          path="/verify-email"
+          element={isAuthenticated ? <Navigate to="/home" replace /> : <EmailVerificationPage />}
         />
         <Route
           path="/home"
