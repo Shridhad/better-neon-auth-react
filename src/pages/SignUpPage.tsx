@@ -45,9 +45,9 @@ export function SignUpPage() {
         navigate('/home');
       } else {
         // Token is null - email verification required
-        // Navigate to separate verification page
-        console.log('No token (verification needed), navigating to verify-email page');
-        navigate(`/verify-email?email=${encodeURIComponent(email)}`);
+        // Navigate to OTP verification page
+        console.log('No token (verification needed), navigating to verify-otp page');
+        navigate(`/verify-otp?email=${encodeURIComponent(email)}`);
       }
     } catch (err: any) {
       // Handle different error formats

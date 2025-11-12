@@ -5,6 +5,7 @@ import { SignInPage } from './pages/SignInPage';
 import { SignUpPage } from './pages/SignUpPage';
 import { HomePage } from './pages/HomePage';
 import { EmailVerificationPage } from './pages/EmailVerificationPage';
+import { OTPVerificationPage } from './pages/OTPVerificationPage';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
 function App() {
@@ -40,6 +41,10 @@ function App() {
         <Route
           path="/verify-email"
           element={isAuthenticated ? <Navigate to="/home" replace /> : <EmailVerificationPage />}
+        />
+        <Route
+          path="/verify-otp"
+          element={isAuthenticated ? <Navigate to="/home" replace /> : <OTPVerificationPage />}
         />
         <Route
           path="/home"
