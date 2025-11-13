@@ -1,15 +1,20 @@
 import { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Input, Card, Divider } from '../components/ui';
-import { signIn } from '../lib/auth-client';
+import { signIn, authClient, useSession } from '../lib/auth-client';
 
 export function SignInPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [needsVerification, setNeedsVerification] = useState(false);
+  const [useOtpMode, setUseOtpMode] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
+  const { refetch } = useSession();
 
   const handleEmailSignIn = async (e: FormEvent) => {
     e.preventDefault();
@@ -104,6 +109,79 @@ export function SignInPage() {
     }
   };
 
+  const handleSendOTP = async (e: FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
+    setLoading(true);
+
+    try {
+      const result = await authClient.emailOtp.sendVerificationOtp({
+        email,
+        type: 'sign-in',
+      });
+
+      if (result?.error) {
+        setError(result.error.message || 'Failed to send OTP');
+        setLoading(false);
+        return;
+      }
+
+      setOtpSent(true);
+      setSuccess('Verification code sent to your email!');
+      setLoading(false);
+    } catch (err: any) {
+      const errorMessage =
+        err?.message ||
+        err?.error?.message ||
+        (typeof err === 'string' ? err : 'Failed to send OTP');
+      setError(errorMessage);
+      setLoading(false);
+    }
+  };
+
+  const handleVerifyOTP = async (e: FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
+    setLoading(true);
+
+    try {
+      const result = await authClient.signIn.emailOtp({
+        email,
+        otp,
+      });
+
+      if (result?.error) {
+        setError(result.error.message || 'Failed to verify OTP');
+        setLoading(false);
+        return;
+      }
+
+      // Refetch session to get updated user data
+      await refetch();
+
+      // Navigate to home
+      navigate('/home');
+    } catch (err: any) {
+      const errorMessage =
+        err?.message ||
+        err?.error?.message ||
+        (typeof err === 'string' ? err : 'Failed to verify OTP');
+      setError(errorMessage);
+      setLoading(false);
+    }
+  };
+
+  const toggleAuthMode = () => {
+    setUseOtpMode(!useOtpMode);
+    setError('');
+    setSuccess('');
+    setOtpSent(false);
+    setOtp('');
+    setPassword('');
+  };
+
   return (
     <div className="min-h-screen bg-gray-950 flex items-center justify-center px-4">
       <div className="w-full max-w-md animate-fade-in">
@@ -150,35 +228,131 @@ export function SignInPage() {
           ) : (
             // Show sign-in form
             <>
-              <form onSubmit={handleEmailSignIn} className="space-y-4">
-                <Input
-                  type="email"
-                  label="Email"
-                  placeholder="you@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
+              {useOtpMode ? (
+                // OTP Sign-in Mode
+                <div className="space-y-4">
+                  {!otpSent ? (
+                    <form onSubmit={handleSendOTP} className="space-y-4">
+                      <Input
+                        type="email"
+                        label="Email"
+                        placeholder="you@example.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                      />
 
-                <Input
-                  type="password"
-                  label="Password"
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
+                      {error && (
+                        <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-md">
+                          <p className="text-sm text-red-400">{error}</p>
+                        </div>
+                      )}
 
-                {error && (
-                  <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-md">
-                    <p className="text-sm text-red-400">{error}</p>
+                      {success && (
+                        <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-md">
+                          <p className="text-sm text-green-400">{success}</p>
+                        </div>
+                      )}
+
+                      <Button type="submit" fullWidth disabled={loading}>
+                        {loading ? 'Sending code...' : 'Send verification code'}
+                      </Button>
+                    </form>
+                  ) : (
+                    <form onSubmit={handleVerifyOTP} className="space-y-4">
+                      <div className="text-center mb-4">
+                        <p className="text-sm text-gray-400">
+                          We've sent a verification code to{' '}
+                          <span className="text-gray-200 font-medium">{email}</span>
+                        </p>
+                      </div>
+
+                      <Input
+                        type="text"
+                        label="Verification Code"
+                        placeholder="Enter 6-digit code"
+                        value={otp}
+                        onChange={(e) => setOtp(e.target.value)}
+                        required
+                        maxLength={6}
+                        autoComplete="one-time-code"
+                      />
+
+                      {error && (
+                        <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-md">
+                          <p className="text-sm text-red-400">{error}</p>
+                        </div>
+                      )}
+
+                      <Button type="submit" fullWidth disabled={loading}>
+                        {loading ? 'Verifying...' : 'Verify and sign in'}
+                      </Button>
+
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        fullWidth
+                        onClick={() => setOtpSent(false)}
+                      >
+                        Resend code
+                      </Button>
+                    </form>
+                  )}
+
+                  <div className="text-center">
+                    <button
+                      type="button"
+                      onClick={toggleAuthMode}
+                      className="text-sm text-primary-500 hover:text-primary-400"
+                    >
+                      Sign in with password instead
+                    </button>
                   </div>
-                )}
+                </div>
+              ) : (
+                // Password Sign-in Mode
+                <>
+                  <form onSubmit={handleEmailSignIn} className="space-y-4">
+                    <Input
+                      type="email"
+                      label="Email"
+                      placeholder="you@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
 
-                <Button type="submit" fullWidth disabled={loading}>
-                  {loading ? 'Signing in...' : 'Sign in with Email'}
-                </Button>
-              </form>
+                    <Input
+                      type="password"
+                      label="Password"
+                      placeholder="••••••••"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+
+                    {error && (
+                      <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-md">
+                        <p className="text-sm text-red-400">{error}</p>
+                      </div>
+                    )}
+
+                    <Button type="submit" fullWidth disabled={loading}>
+                      {loading ? 'Signing in...' : 'Sign in with Email'}
+                    </Button>
+                  </form>
+
+                  <div className="text-center mt-4">
+                    <button
+                      type="button"
+                      onClick={toggleAuthMode}
+                      className="text-sm text-primary-500 hover:text-primary-400"
+                    >
+                      Sign in with verification code instead
+                    </button>
+                  </div>
+                </>
+              )}
 
               <Divider text="or" />
 
