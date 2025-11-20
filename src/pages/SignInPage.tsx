@@ -46,6 +46,10 @@ export function SignInPage() {
         return;
       }
 
+      // Refetch session to ensure we have the latest user data
+      await refetch();
+
+      // Navigate to home
       navigate('/home');
     } catch (err: any) {
       // Handle different error formats
@@ -64,7 +68,6 @@ export function SignInPage() {
       } else {
         setError(errorMessage);
       }
-    } finally {
       setLoading(false);
     }
   };
