@@ -331,6 +331,15 @@ export function SignInPage() {
                       required
                     />
 
+                    <div className="text-right">
+                      <a
+                        href="/forgot-password"
+                        className="text-sm text-primary-500 hover:text-primary-400"
+                      >
+                        Forgot password?
+                      </a>
+                    </div>
+
                     {error && (
                       <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-md">
                         <p className="text-sm text-red-400">{error}</p>

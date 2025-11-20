@@ -6,6 +6,8 @@ import { SignUpPage } from './pages/SignUpPage';
 import { HomePage } from './pages/HomePage';
 import { EmailVerificationPage } from './pages/EmailVerificationPage';
 import { OTPVerificationPage } from './pages/OTPVerificationPage';
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
+import { ResetPasswordPage } from './pages/ResetPasswordPage';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
 function App() {
@@ -45,6 +47,14 @@ function App() {
         <Route
           path="/verify-otp"
           element={isAuthenticated ? <Navigate to="/home" replace /> : <OTPVerificationPage />}
+        />
+        <Route
+          path="/forgot-password"
+          element={isAuthenticated ? <Navigate to="/home" replace /> : <ForgotPasswordPage />}
+        />
+        <Route
+          path="/reset-password"
+          element={isAuthenticated ? <Navigate to="/home" replace /> : <ResetPasswordPage />}
         />
         <Route
           path="/home"
