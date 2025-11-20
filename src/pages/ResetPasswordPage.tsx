@@ -18,7 +18,7 @@ export function ResetPasswordPage() {
 
   useEffect(() => {
     // Check if there's an error in the URL (invalid token)
-    if (errorParam === 'invalid_token') {
+    if (errorParam === 'INVALID_TOKEN' || errorParam === 'invalid_token') {
       setTokenError(true);
     }
 
