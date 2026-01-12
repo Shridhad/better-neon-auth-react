@@ -16,7 +16,7 @@ export function HomePage() {
               Welcome back, {session?.user?.name?.split(' ')[0] || 'there'}!
             </h1>
             <p className="text-xl text-gray-400">
-              Focus on what matters most today
+              Neon Auth + Vercel Demo
             </p>
           </div>
 
