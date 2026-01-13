@@ -2,6 +2,7 @@
 
 A productivity application with Linear-inspired design that helps users prioritize and stay on track for their top 3 priorities of the day.
 
+Random Update
 ## Tech Stack
 
 - **React 18** - UI library
